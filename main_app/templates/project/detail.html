@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Project Detail</h1>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ project.name }}</span>
+        <p>Description: {{ project.description }}</p>
+        <p>Link: {{ project.link }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'project_update' project.id %}">Edit</a>
+        <a href="{% url 'project_delete' project.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <form action="{% url 'add_date' project.id %}" method="post">
+      {% csrf_token %}
+      {{ date_form.as_p }}
+      <input type="submit" class="btn green" value="Add date" />
+    </form>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for date in project.date_set.all %}
+        <tr>
+          <td>{{date.date}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col s6">
+      <h3>{{ project.name }}'s status</h3>
+      {% if project.status.count %} {% for status in project.status.all %}
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title">
+                 {{ status.name }}
+              </span>
+          </div>
+      </div>
+      {% endfor %} {% else %}
+      <h5>No status :(</h5>
+      {% endif %}
+  </div>
+  <div class="col s6">
+      <h3>Available status</h3>
+      {% if status.count %}
+      {% for status in status.all %}
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title">
+                {{ status.name }}
+              </span>
+          </div>
+          <div class="card-action">
+              <form action="{% url 'assoc_status' project.id status.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">Add</button>
+              </form>
+          </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <h5>{{project.name}} Already Has All status Available</h5>
+      {% endif %}
+  </div>
+
+</div>
+<script>
+  var dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+</script>
+
+
+{% endblock %}

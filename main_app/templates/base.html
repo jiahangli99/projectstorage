@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Storage</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+</head>
+<body>
+    <header class="navbar-fixed">
+        <nav>
+          <div class="nav-wrapper">
+            <ul>
+              <li>
+                <a href="/" class="left brand-logo">&nbsp;&nbsp;Project Storage</a>
+              </li>
+            </ul>
+            <ul class="right">
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'projects' %}">View All My Projects</a></li>
+                <li><a href="{% url 'project_create' %}">Add a project</a></li>
+                <li><a href="{% url 'status_create' %}">Add a status</a></li>
+                <li><a href="{% url 'status_index' %}">View All My status</a></li>
+          </ul>
+          </div>
+        </nav>
+      </header>
+      <main class="container">{% block content %} {% endblock %}</main>
+      <footer class="page-footer">
+      </footer>
+      <div class="right">
+        All Rights Reserved, &copy; 2022 Project Storage &nbsp;
+      </div>
+</body>
+</html>
